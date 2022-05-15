@@ -1,0 +1,54 @@
+// Write your tests here!
+const expect = require("chai").expect;
+const {polybius} = require("../src/polybius");
+
+describe("polybius", () => {
+  it("return 22 when given g", () => {
+    let input = "g";
+    let expected = "22";
+    let actual = polybius(input, (encode = true));
+    expect(actual).to.equal(expected);
+  });
+  it("return hello world when given 3251131343 2543241341", () => {
+    let input = "3251131343 2543241341";
+    let expected = "hello world";
+    let encode = false;
+    let actual = polybius(input, encode);
+    expect(actual).to.equal(expected);
+  });
+  it("when encoding, translates i and j to 42", () => {
+    let input = "i j";
+    let expected = "42 42";
+    let encode = true;
+    let actual = polybius(input, encode);
+    expect(actual).to.equal(expected);
+  });
+  it("ignore capital letters", () => {
+    let input1 = "hello scott";
+    let encode = true;
+    let input2 = "HELLO SCOTT";
+    let actual = polybius(input1, encode);
+    let expected = polybius(input2, encode);
+    expect(actual).to.equal(expected);
+  });
+  it("maintain spaces when decoding", () => {
+    let input = "3251131343 2543241341 3251131343 2543241341";
+    let expected = "hello world hello world";
+    let encode = false;
+    let actual = polybius(input, encode);
+    expect(actual).to.equal(expected);
+  });
+  it("maintain spaces when encoding", () => {
+    let expected = "3251131343 2543241341 3251131343 2543241341";
+    let input = "hello world hello world";
+    let encode = true;
+    let actual = polybius(input, encode);
+    expect(actual).to.equal(expected);
+  });
+  it("return false if number of digits is odd when decoding", () => {
+    let input = "3251131343 254324134";
+    let encode = false;
+    let actual = polybius(input, encode);
+    expect(actual).to.be.false;
+  });
+});
